@@ -26,10 +26,12 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color:#0f172a; /* Tailwind blue-500 */
+  color: #10B981;
+  margin: 0;
+  font-family: Inter, sans-serif;
 }
 
 h1 {
@@ -48,6 +50,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
@@ -59,7 +62,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: yellow;
   }
   a:hover {
     color: #747bff;

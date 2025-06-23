@@ -3,6 +3,7 @@ import axios from 'axios';
 import zxcvbn from 'zxcvbn';
 import ReCAPTCHA from 'react-google-recaptcha'
 
+
 const RegisterForm: React.FC = () => {
     const [formData, setFormData] = useState({
         email: '',
@@ -37,27 +38,64 @@ const RegisterForm: React.FC = () => {
     }
     const passwordScore = zxcvbn(formData.password).score;
         return (
-          <form onSubmit={handleSubmit}>
-            <h2>Register</h2>
-            {error && <p style={{color: 'red'}}>{error}</p>},
-            {success && <p style={{color: 'green'}}>{error}</p>}
-            <input name="first_name" placeholder="First Name"onChange={handleChange}required/>
-            <input name="last_name" placeholder="Last Name" onChange={handleChange}required/>
-            <input name="email" placeholder="Email" onChange={handleChange}required/>
-            <input name="password" placeholder="Password" onChange={handleChange}required/>
-            {formData.password && (
-                <small>
-                    Password Strength{['Very Weak', 'Weak','Fair','Good','String'][passwordScore]}
-                </small>
-            )}
-            <br /><br />
-            <ReCAPTCHA
-                sitekey=""
-                onChange={(token) => setCaptchaToken(token)}
+           
+            <form
+            onSubmit={handleSubmit}
+            className="space-y-4 text-gray-800"
+          >
+            {error && <p className="text-red-600">{error}</p>}
+            {success && <p className="text-green-600">{error}</p>}
+          
+            <input
+              name="first_name"
+              placeholder="First Name"
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            <br/>
-            <button type="submit">Register</button>
-          </form>   
-        )
+            <input
+              name="last_name"
+              placeholder="Last Name"
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              name="email"
+              placeholder="Email"
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              required
+              type="password"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          
+            {formData.password && (
+              <small className="text-gray-500 block">
+                Password Strength: {['Very Weak', 'Weak', 'Fair', 'Good', 'Strong'][passwordScore]}
+              </small>
+            )}
+          
+            <ReCAPTCHA
+              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+              onChange={(token) => setCaptchaToken(token)}
+            />
+          
+            <button
+              type="submit"
+              className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition"
+            >
+              Register
+            </button>
+          </form>
+          
+   
+        );
     };
     export default RegisterForm;
