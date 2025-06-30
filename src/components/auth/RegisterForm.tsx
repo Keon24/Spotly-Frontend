@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import zxcvbn from 'zxcvbn';
 import ReCAPTCHA from 'react-google-recaptcha'
@@ -15,6 +16,7 @@ const RegisterForm: React.FC = () => {
     const [captchaToken, setCaptchaToken] = useState<string |null>(null);
     const [error, setError ] = useState('');
     const [success, setSucess] = useState(false);
+    const navigate = useNavigate();
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value})
@@ -32,6 +34,7 @@ const RegisterForm: React.FC = () => {
          });
          setSucess(true);
          setError(''); 
+         navigate('/login')
         } catch (err:any) {
             setError(err.response?.data?.message || 'Registered Successfully')  
         }
@@ -86,7 +89,14 @@ const RegisterForm: React.FC = () => {
               sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
               onChange={(token) => setCaptchaToken(token)}
             />
-          
+              <div className="relative my-4">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-300" />
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="bg-white px-2 text-gray-500">or</span>
+        </div>
+      </div>
             <button
               type="submit"
               className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition"
