@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import GoogleAuthButton from './GoogleAuthButton';
+
+// Ensure axios sends cookies (tokens) with requests
+axios.defaults.withCredentials = true;
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -14,13 +17,18 @@ const LoginForm: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('handleLogin triggered', formData);
+  
     try {
-      await axios.post('/api/users/login/', formData);
-      navigate('/dashboard'); // 👈 Change this to your main page after login
+      const response = await axios.post('http://localhost:8000/api/users/login/', formData, { withCredentials: true });
+      console.log('Login success', response.data);
+      navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid credentials');
+      console.error('Login error', err.response?.data);
+      setError(err.response?.data?.detail || 'Invalid credentials');
     }
   };
+  
 
   return (
     <form
@@ -28,7 +36,9 @@ const LoginForm: React.FC = () => {
       className="w-full max-w-md p-8 text-gray-800 shadow-xl rounded-lg space-y-4 border border-[#2c2c2c]"
     >
       <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
+
       {error && <p className="text-red-600 text-sm text-center">{error}</p>}
+
       <input
         className="w-full p-2 border rounded"
         type="email"
@@ -45,7 +55,8 @@ const LoginForm: React.FC = () => {
         onChange={handleChange}
         required
       />
-    <div className="relative my-4">
+
+      <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300" />
         </div>
@@ -54,18 +65,18 @@ const LoginForm: React.FC = () => {
         </div>
       </div>
 
-       <GoogleAuthButton />
-       <button
+      <GoogleAuthButton />
+
+      <button
         type="submit"
         className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition"
-      >
-        Login
+        >
+          Login
       </button>
-
 
       <p className="text-center text-sm text-gray-600 mt-4">
         Don’t have an account?{' '}
-        <Link to="/register" className="text-indigo-600 hover:underline">
+        <Link to="/register" className="text-indigo-400 hover:text-indigo-300 transition-colors">
           Register
         </Link>
       </p>
