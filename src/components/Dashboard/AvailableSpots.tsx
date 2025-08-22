@@ -19,7 +19,7 @@ const AvailableSpots = () => {
   const checkDateAvailability = useCallback(async (checkDate: string): Promise<boolean> => {
     try {
       console.log(` Checking availability for date: ${checkDate}`);
-      const response = await axios.get(`http://localhost:8000/api/reservations/available/?date=${checkDate}`, {
+      const response = await axios.get(`https://spotly-kozf.onrender.com/api/reservations/available/?date=${checkDate}`, {
         withCredentials: true
       });
       console.log(` ${checkDate} response:`, response.data);
@@ -98,7 +98,7 @@ const AvailableSpots = () => {
   useEffect(() => {
     if (date) {
       axios
-  .get(`http://localhost:8000/api/reservations/available/?date=${date}`, {
+  .get(`https://spotly-kozf.onrender.com/api/reservations/available/?date=${date}`, {
     withCredentials: true  
   })
   .then((res) => {
@@ -126,7 +126,7 @@ const AvailableSpots = () => {
     console.log('Making reservation:', { space: spotId, reserve_date: reserveDateTime });
     
     axios.post(
-      'http://localhost:8000/api/reservations/',
+      'https://spotly-kozf.onrender.com/api/reservations/',
       {
         space: spotId,
         reserve_date: reserveDateTime,

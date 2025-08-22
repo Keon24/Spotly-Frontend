@@ -9,7 +9,7 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8000/api/users/logout/', {}, {
+      await axios.post('https://spotly-kozf.onrender.com/api/users/logout/', {}, {
         withCredentials: true,
       });
 
