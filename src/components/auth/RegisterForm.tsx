@@ -32,6 +32,10 @@ const RegisterForm: React.FC = () => {
       setSuccess(true);
       navigate('/login');
     } catch (err: any) {
+      console.error('Registration error:', err);
+      console.error('Error response:', err.response);
+      console.error('Error data:', err.response?.data);
+      
       const data = err.response?.data;
       if (data && typeof data === 'object') {
         const messages = Object.entries(data)
@@ -39,7 +43,7 @@ const RegisterForm: React.FC = () => {
           .join(' | ');
         setError(messages);
       } else {
-        setError('Something went wrong');
+        setError(`Something went wrong: ${err.message || 'Unknown error'}`);
       }
     }
   };
