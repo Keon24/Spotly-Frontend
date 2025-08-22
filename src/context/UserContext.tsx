@@ -34,7 +34,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/users/profile/", {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/profile/`, {
           withCredentials: true, 
         });
         setUser(res.data);

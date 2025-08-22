@@ -24,7 +24,7 @@ const RegisterForm: React.FC = () => {
     e.preventDefault();
     setError('');
     try {
-      await axios.post('https://spotly-kozf.onrender.com/api/users/register/', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/users/register/`, formData, {
   withCredentials: true
 });
 
