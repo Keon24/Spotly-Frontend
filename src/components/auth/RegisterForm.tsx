@@ -8,7 +8,6 @@ const RegisterForm: React.FC = () => {
     first_name: '',
     last_name: '',
     email: '',
-    username: '',
     password: '',
     password2: '',
   });
@@ -78,14 +77,6 @@ const RegisterForm: React.FC = () => {
         placeholder="Email"
         type="email"
         value={formData.email}
-        onChange={handleChange}
-        required
-        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
-      <input
-        name="username"
-        placeholder="Username"
-        value={formData.username}
         onChange={handleChange}
         required
         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
