@@ -20,7 +20,7 @@ const LoginForm: React.FC = () => {
     console.log('handleLogin triggered', formData);
   
     try {
-      const response = await axios.post('http://localhost:8000/api/users/login/', formData, { withCredentials: true });
+      const response = await axios.post('https://spotly-kozf.onrender.com/api/users/login/', formData, { withCredentials: true });
       console.log('Login success', response.data);
       navigate('/dashboard');
     } catch (err: any) {
