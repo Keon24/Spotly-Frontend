@@ -34,13 +34,25 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+        
         const res = await axios.get("https://spotly-kozf.onrender.com/api/users/profile/", {
-          withCredentials: true, 
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
         setUser(res.data);
       } catch (err) {
         console.error("Failed to fetch user profile", err);
         setUser(null);
+        // Clear invalid token
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
       } finally {
         setLoading(false);
       }
