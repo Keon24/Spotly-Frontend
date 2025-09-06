@@ -41,10 +41,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           return;
         }
         
-        const res = await axios.get("https://spotly-kozf.onrender.com/api/users/profile/", {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/profile/`, {
+          withCredentials: true
         });
         setUser(res.data);
       } catch (err) {
