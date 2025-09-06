@@ -52,7 +52,7 @@ export default function ProfilePage() {
   const handleSave = async () => {
     setLoading(true);
     try {
-      const response = await axios.put('https://spotly-kozf.onrender.com/api/users/profile/', formData, {
+      const response = await axios.put(`${import.meta.env.VITE_API_URL}/api/users/profile/`, formData, {
         withCredentials: true
       });
       setUser(response.data);

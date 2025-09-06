@@ -21,7 +21,7 @@ export default function ReservationsPage() {
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const response = await axios.get('https://spotly-kozf.onrender.com/api/reservations/', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/reservations/`, {
           withCredentials: true
         });
         setReservations(response.data);
@@ -37,7 +37,7 @@ export default function ReservationsPage() {
 
   const handleCancelReservation = async (reservationId: number) => {
     try {
-      await axios.post(`https://spotly-kozf.onrender.com/api/reservations/${reservationId}/cancel/`, {}, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/reservations/${reservationId}/cancel/`, {}, {
         withCredentials: true
       });
       setReservations(prev => prev.filter(res => res.id !== reservationId));
