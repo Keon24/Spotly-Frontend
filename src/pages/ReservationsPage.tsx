@@ -21,8 +21,11 @@ export default function ReservationsPage() {
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/reservations/`, {
-          withCredentials: true
+        const token = localStorage.getItem('access_token');
+        const response = await axios.get('https://spotly-kozf.onrender.com/api/reservations/', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
         setReservations(response.data);
       } catch (error) {
@@ -37,8 +40,11 @@ export default function ReservationsPage() {
 
   const handleCancelReservation = async (reservationId: number) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/reservations/${reservationId}/cancel/`, {}, {
-        withCredentials: true
+      const token = localStorage.getItem('access_token');
+      await axios.post(`https://spotly-kozf.onrender.com/api/reservations/${reservationId}/cancel/`, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
       setReservations(prev => prev.filter(res => res.id !== reservationId));
       alert('Reservation cancelled successfully');

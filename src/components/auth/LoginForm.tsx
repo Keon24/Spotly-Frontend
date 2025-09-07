@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import GoogleAuthButton from './GoogleAuthButton';
+import { useUser } from '../../context/UserContext';
 
 // Ensure axios sends cookies (tokens) with requests
 axios.defaults.withCredentials = true;
@@ -10,6 +11,7 @@ const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,6 +28,11 @@ const LoginForm: React.FC = () => {
       // Store tokens in localStorage
       localStorage.setItem('access_token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
+      
+      // Set user in context immediately
+      if (response.data.user) {
+        setUser(response.data.user);
+      }
       
       navigate('/dashboard');
     } catch (err: any) {
