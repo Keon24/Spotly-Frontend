@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Sidebar from '../components/layout/Sidebar';
-import Navbar from '../components/layout/Navbar';
 
 type Reservation = {
   id: number;
@@ -21,12 +19,8 @@ export default function ReservationsPage() {
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const token = localStorage.getItem('access_token');
-        const response = await axios.get('https://spotly-kozf.onrender.com/api/reservations/', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        // Use cookie-based authentication (withCredentials is already set globally)
+        const response = await axios.get('https://spotly-kozf.onrender.com/api/reservations/');
         setReservations(response.data);
       } catch (error) {
         console.error('Failed to fetch reservations:', error);
@@ -40,12 +34,8 @@ export default function ReservationsPage() {
 
   const handleCancelReservation = async (reservationId: number) => {
     try {
-      const token = localStorage.getItem('access_token');
-      await axios.post(`https://spotly-kozf.onrender.com/api/reservations/${reservationId}/cancel/`, {}, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      // Use cookie-based authentication (withCredentials is already set globally)
+      await axios.post(`https://spotly-kozf.onrender.com/api/reservations/${reservationId}/cancel/`, {});
       setReservations(prev => prev.filter(res => res.id !== reservationId));
       alert('Reservation cancelled successfully');
     } catch (error) {
@@ -55,20 +45,7 @@ export default function ReservationsPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-black via-[#0f1121] to-gray-900 text-white">
-      
-      <aside className="fixed top-0 left-0 h-screen w-64 bg-[#121212] z-50 shadow-lg">
-        <Sidebar />
-      </aside>
-
-      <div className="ml-64 w-full flex flex-col">
-        
-        <header className="fixed top-0 left-64 right-0 h-16 bg-[#1f1f1f] z-40 shadow-md">
-          <Navbar />
-        </header>
-
-        <main className="mt-16 p-8">
-          <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto">
             <h1 className="text-3xl font-bold mb-6">My Reservations</h1>
             
             {loading && (
@@ -128,10 +105,6 @@ export default function ReservationsPage() {
                 ))}
               </div>
             )}
-          </div>
-        </main>
-
-      </div>
     </div>
   );
 }
