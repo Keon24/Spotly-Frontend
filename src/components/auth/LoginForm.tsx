@@ -20,10 +20,12 @@ const LoginForm: React.FC = () => {
     console.log('handleLogin triggered', formData);
   
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/login/`, formData, {
-        withCredentials: true
-      });
+      const response = await axios.post('https://spotly-kozf.onrender.com/api/users/login/', formData);
       console.log('Login success', response.data);
+      
+      // Store tokens in localStorage
+      localStorage.setItem('access_token', response.data.access_token);
+      localStorage.setItem('refresh_token', response.data.refresh_token);
       
       navigate('/dashboard');
     } catch (err: any) {
