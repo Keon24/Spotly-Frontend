@@ -25,6 +25,10 @@ const AvailableSpots = () => {
     setDate(selectedDate);
   };
 
+  const handleQuickPickDate = (selectedDate: string) => {
+    setDate(selectedDate);
+  };
+
   useEffect(() => {
     // Show today as an available date but don't auto-select it
     const today = new Date().toISOString().split('T')[0];
@@ -151,12 +155,7 @@ const AvailableSpots = () => {
             {availableDates.slice(0, 10).map((availableDate) => (
               <button
                 key={availableDate}
-                onClick={() => {
-                  setDate(availableDate);
-                  // Update the date input field too
-                  const dateInput = document.querySelector('input[type="date"]') as HTMLInputElement;
-                  if (dateInput) dateInput.value = availableDate;
-                }}
+                onClick={() => handleQuickPickDate(availableDate)}
                 className={`px-3 py-2 rounded text-sm ${
                   date === availableDate
                     ? 'bg-indigo-600 text-white'
