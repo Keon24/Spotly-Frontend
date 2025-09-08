@@ -15,77 +15,10 @@ const AvailableSpots = () => {
 
 
 
-  // Check if date has available spots
-  const checkDateAvailability = useCallback(async (checkDate: string): Promise<boolean> => {
-    try {
-      console.log(` Checking availability for date: ${checkDate}`);
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/reservations/available/?date=${checkDate}`, {
-        withCredentials: true
-      });
-      console.log(` ${checkDate} response:`, response.data);
-      // Get the available spots and the number of spots
-      const hasSpots = response.data.available_spots && response.data.available_spots.length > 0;
-      // Get the length of spots if it exist if not set to default
-      console.log(` ${checkDate} has spots: ${hasSpots} (${response.data.available_spots?.length || 0} spots)`);
-      return hasSpots;
-    } catch (error) {
-      console.error(` Error checking ${checkDate}:`, error);
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) {
-          console.error('Authentication required for date check - treating as available');
-        } else if (error.response?.status === 404) {
-          console.error('API endpoint not found');
-        } else {
-          console.error('Server error:', error.response?.data);
-        }
-      }
-      // Return true for errors to not block the UI - spots will show when date is selected
-      return true;
-    }
-  }, []);
-// list parking spots for the next 30 days 
-  const getAvailableDatesForNext30Days = useCallback(async () => {
-    console.log(' Starting to check available dates for next 30 days...');
-    setLoading(true);
-    // create a new date and function to that holds only available parking spots [string[]]
-    const today = new Date();
-    const availableDatesList: string[] = [];
-    // create a loop that runs 30 times for each of the next 30 days
-    // create a copy of todays date and get the day of the month
-    //convert the date into a string and push it to the availabledatelist 
-    try {
-      const datePromises = [];
-      for (let i = 0; i < 30; i++) {
-        const checkDate = new Date(today);
-        checkDate.setDate(today.getDate() + i);
-        const dateString = checkDate.toISOString().split('T')[0];
-        datePromises.push(
-          checkDateAvailability(dateString).then(hasSpots => ({
-            date: dateString,
-            hasSpots
-          }))
-        );
-      }
-      // Wait for all date checks to complete
-      const results = await Promise.allSettled(datePromises);
-      // 30 days in the array one for each i pushed in the result
-      results.forEach((result) => {
-        if (result.status === 'fulfilled' && result.value.hasSpots) {
-          availableDatesList.push(result.value.date);
-        }
-      });
-      
-      availableDatesList.sort();
-      console.log(' Final available dates found:', availableDatesList);
-      console.log(` Total available dates: ${availableDatesList.length} out of 30 checked`);
-      setAvailableDates(availableDatesList);
-    } catch (error) {
-      console.error('Error fetching available dates:', error);
-      setAvailableDates([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [checkDateAvailability]);
+  // Temporarily disabled the date availability checking function
+  // It was getting HTML responses instead of JSON from the API
+// Temporarily disabled the 30-day check due to API issues
+  // Will re-enable once we fix the HTML response problem
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedDate = e.target.value;
