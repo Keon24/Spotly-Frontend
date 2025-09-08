@@ -42,7 +42,9 @@ const AvailableSpots = () => {
   })
   .then((res) => {
     console.log('Available response:', res.data);
-    setSpots(res.data.available_spots || []);
+    // Show only 1 spot for simplicity
+    const firstSpot = res.data.available_spots?.[0];
+    setSpots(firstSpot ? [firstSpot] : []);
   })
   .catch((err) => {
     console.error('Failed to fetch spots', err);
@@ -61,7 +63,7 @@ const AvailableSpots = () => {
   }, [date]);
 
   const handleReserve = (spotId: number) => {
-    const reserveDateTime = `${date}T${time}:00`;
+    const reserveDateTime = `${date}T${time}:00.000Z`;
     console.log('Making reservation:', { space: spotId, reserve_date: reserveDateTime });
     
     axios.post(
