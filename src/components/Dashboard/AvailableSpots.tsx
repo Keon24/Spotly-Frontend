@@ -151,7 +151,12 @@ const AvailableSpots = () => {
             {availableDates.slice(0, 10).map((availableDate) => (
               <button
                 key={availableDate}
-                onClick={() => setDate(availableDate)}
+                onClick={() => {
+                  setDate(availableDate);
+                  // Update the date input field too
+                  const dateInput = document.querySelector('input[type="date"]') as HTMLInputElement;
+                  if (dateInput) dateInput.value = availableDate;
+                }}
                 className={`px-3 py-2 rounded text-sm ${
                   date === availableDate
                     ? 'bg-indigo-600 text-white'
