@@ -26,13 +26,11 @@ const AvailableSpots = () => {
   };
 
   useEffect(() => {
-    // Set today as default date and skip the 30-day check entirely
+    // Show today as an available date but don't auto-select it
     const today = new Date().toISOString().split('T')[0];
-    setDate(today);
-    setAvailableDates([today]); // Show at least today as available
+    setAvailableDates([today]); // Show today as available
     setLoading(false);
-    // Don't run the 30-day check since it's failing
-    // getAvailableDatesForNext30Days();
+    // Don't auto-set date - let user select manually
   }, []);
 
   useEffect(() => {
