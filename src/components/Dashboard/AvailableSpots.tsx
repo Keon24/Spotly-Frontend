@@ -32,14 +32,15 @@ const AvailableSpots = () => {
       console.error(` Error checking ${checkDate}:`, error);
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) {
-          console.error('Authentication required');
+          console.error('Authentication required for date check - treating as available');
         } else if (error.response?.status === 404) {
           console.error('API endpoint not found');
         } else {
           console.error('Server error:', error.response?.data);
         }
       }
-      return false;
+      // Return true for errors to not block the UI - spots will show when date is selected
+      return true;
     }
   }, []);
 // list parking spots for the next 30 days 
@@ -92,6 +93,10 @@ const AvailableSpots = () => {
   };
 
   useEffect(() => {
+    // Set today as default date instead of running complex 30-day check
+    const today = new Date().toISOString().split('T')[0];
+    setDate(today);
+    // Still run the 30-day check but don't block the UI
     getAvailableDatesForNext30Days();
   }, [getAvailableDatesForNext30Days]);
 
