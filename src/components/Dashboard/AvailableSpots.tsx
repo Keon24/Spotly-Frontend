@@ -37,8 +37,9 @@ const AvailableSpots = () => {
 
   useEffect(() => {
     if (date) {
+      // Use absolute backend URL to bypass environment variable issues
       axios
-  .get(`${import.meta.env.VITE_API_URL}/api/reservations/available/?date=${date}`, {
+  .get(`https://spotly-kozf.onrender.com/api/reservations/available/?date=${date}`, {
     withCredentials: true  
   })
   .then((res) => {
@@ -66,7 +67,7 @@ const AvailableSpots = () => {
     console.log('Making reservation:', { space: spotId, reserve_date: reserveDateTime });
     
     axios.post(
-      `${import.meta.env.VITE_API_URL}/api/reservations/`,
+      `https://spotly-kozf.onrender.com/api/reservations/`,
       {
         space: spotId,
         reserve_date: reserveDateTime,
