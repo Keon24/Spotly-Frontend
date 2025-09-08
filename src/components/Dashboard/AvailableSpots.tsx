@@ -64,14 +64,13 @@ const AvailableSpots = () => {
 
   const handleReserve = (spotId: number) => {
     const reserveDateTime = `${date}T${time}:00.000Z`;
-    console.log('Making reservation:', { space: spotId, reserve_date: reserveDateTime });
+    const reservationData = { space: spotId, reserve_date: reserveDateTime };
+    console.log('Making reservation:', JSON.stringify(reservationData));
+    console.log('Date:', date, 'Time:', time, 'SpotId:', spotId);
     
     axios.post(
       `https://spotly-kozf.onrender.com/api/reservations/`,
-      {
-        space: spotId,
-        reserve_date: reserveDateTime,
-      },
+      reservationData,
       { withCredentials: true }
     )
     .then((res) => {
@@ -81,8 +80,9 @@ const AvailableSpots = () => {
     })
     .catch((err) => {
       console.log('Reservation failed', err);
-      console.log('Error response:', err.response?.data);
+      console.log('Error response:', JSON.stringify(err.response?.data));
       console.log('Error status:', err.response?.status);
+      console.log('Full error:', JSON.stringify(err.response));
       
       if (axios.isAxiosError(err)) {
         if (err.response?.status === 401) {
