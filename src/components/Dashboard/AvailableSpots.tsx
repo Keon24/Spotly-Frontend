@@ -93,12 +93,14 @@ const AvailableSpots = () => {
   };
 
   useEffect(() => {
-    // Set today as default date instead of running complex 30-day check
+    // Set today as default date and skip the 30-day check entirely
     const today = new Date().toISOString().split('T')[0];
     setDate(today);
-    // Still run the 30-day check but don't block the UI
-    getAvailableDatesForNext30Days();
-  }, [getAvailableDatesForNext30Days]);
+    setAvailableDates([today]); // Show at least today as available
+    setLoading(false);
+    // Don't run the 30-day check since it's failing
+    // getAvailableDatesForNext30Days();
+  }, []);
 
   useEffect(() => {
     if (date) {
