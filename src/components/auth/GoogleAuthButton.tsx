@@ -10,7 +10,7 @@ const GoogleAuthButton: React.FC = () => {
     <button
       type="button"
       onClick={handleGoogleLogin}
-      className="w-full flex items-center justify-center gap-2 border-2 border-gray-400 rounded-md py-2 px-4 bg-white hover:bg-gray-50 transition shadow-sm"
+      className="w-full flex items-center justify-center gap-2 border-2 border-white rounded-md py-2 px-4 bg-white hover:bg-gray-50 transition shadow-lg"
     >
       <FcGoogle className="text-xl" />
       <span className="text-sm text-gray-800 font-semibold">Sign in with Google</span>
