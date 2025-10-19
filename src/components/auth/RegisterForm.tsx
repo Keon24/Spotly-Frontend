@@ -118,7 +118,7 @@ const RegisterForm: React.FC = () => {
       </div>
 
       {/* Google button */}
-      <GoogleAuthButton />
+      <GoogleAuthButton text="Sign up with Google" />
 
       {/* Register button */}
       <button
