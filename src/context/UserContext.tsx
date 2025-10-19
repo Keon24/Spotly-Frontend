@@ -32,9 +32,17 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Setup axios interceptor to add Authorization header to all requests
+    const interceptor = axios.interceptors.request.use((config) => {
+      const token = localStorage.getItem('access_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
+
     const fetchUser = async () => {
       try {
-        // Use cookie-based authentication (withCredentials is already set globally)
         const res = await axios.get("https://spotly-kozf.onrender.com/api/users/profile/");
         setUser(res.data);
       } catch (err) {
@@ -49,6 +57,11 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     };
 
     fetchUser();
+
+    // Cleanup interceptor on unmount
+    return () => {
+      axios.interceptors.request.eject(interceptor);
+    };
   }, []);
 
   return (
