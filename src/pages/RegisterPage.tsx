@@ -10,17 +10,9 @@ export default function Register() {
           Enter your information to create your Spotly account.
         </p>
 
-    
+
         <RegisterForm />
 
-       
-        <div className="flex items-center my-4">
-          <div className="flex-grow border-t border-gray-300" />
-          <span className="mx-2 text-sm text-gray-400">or</span>
-          <div className="flex-grow border-t border-gray-300" />
-        </div>
-
-        <GoogleAuthButton />
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <Link to="/login" className="text-blue-600 hover:underline font-medium">
