@@ -1,5 +1,4 @@
 import RegisterForm from "../components/auth/RegisterForm";
-import GoogleAuthButton from "../components/auth/GoogleAuthButton";
 import { Link } from 'react-router-dom'
 export default function Register() {
   return (
