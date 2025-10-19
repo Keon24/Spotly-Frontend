@@ -1,5 +1,5 @@
 import LoginForm from "../components/auth/LoginForm"
-import { Link } from 'react-router-dom'
+
 export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-[#0f1121] flex items-center justify-center px-4">
