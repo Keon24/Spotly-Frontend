@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import zxcvbn from 'zxcvbn';
+import GoogleAuthButton from './GoogleAuthButton';
 
 const RegisterForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -28,19 +29,18 @@ const RegisterForm: React.FC = () => {
 
       setSuccess(true);
       navigate('/login');
-    } catch (err: any) {
-      console.error('Registration error:', err);
-      console.error('Error response:', err.response);
-      console.error('Error data:', err.response?.data);
-      
-      const data = err.response?.data;
+    } catch (err) {
+      const axiosErr = err as AxiosError<Record<string, string[] | string>>;
+      console.error('Registration error:', axiosErr);
+
+      const data = axiosErr.response?.data;
       if (data && typeof data === 'object') {
         const messages = Object.entries(data)
-          .map(([field, msg]: any) => `${field}: ${Array.isArray(msg) ? msg.join(', ') : msg}`)
+          .map(([field, msg]) => `${field}: ${Array.isArray(msg) ? msg.join(', ') : msg}`)
           .join(' | ');
         setError(messages);
       } else {
-        setError(`Something went wrong: ${err.message || 'Unknown error'}`);
+        setError(`Something went wrong: ${axiosErr.message || 'Unknown error'}`);
       }
     }
   };
@@ -48,7 +48,10 @@ const RegisterForm: React.FC = () => {
   const passwordScore = zxcvbn(formData.password).score;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 text-gray-800 max-w-md mx-auto p-6 bg-white/10 border border-white/20 rounded-lg shadow-md">
+    <form 
+      onSubmit={handleSubmit} 
+      className="space-y-4 text-gray-800 max-w-md mx-auto p-6 bg-white/10 border border-white/20 rounded-lg shadow-md"
+    >
       <h2 className="text-3xl font-bold text-center text-white">Sign Up</h2>
 
       {error && <p className="text-red-600 text-sm text-center">{error}</p>}
@@ -104,6 +107,7 @@ const RegisterForm: React.FC = () => {
         </small>
       )}
 
+      {/* Divider */}
       <div className="relative my-4">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-500" />
@@ -113,6 +117,10 @@ const RegisterForm: React.FC = () => {
         </div>
       </div>
 
+      {/* Google button */}
+      <GoogleAuthButton />
+
+      {/* Register button */}
       <button
         type="submit"
         className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition"
@@ -124,4 +132,3 @@ const RegisterForm: React.FC = () => {
 };
 
 export default RegisterForm;
-
