@@ -14,6 +14,11 @@ export default function AuthCallbackPage() {
       const refreshToken = searchParams.get('refresh_token');
       const error = searchParams.get('error');
 
+      console.log('AuthCallback - access_token:', accessToken ? 'present' : 'missing');
+      console.log('AuthCallback - refresh_token:', refreshToken ? 'present' : 'missing');
+      console.log('AuthCallback - error:', error);
+      console.log('AuthCallback - all params:', Object.fromEntries(searchParams));
+
       if (error) {
         console.error('OAuth error:', error);
         navigate('/login?error=' + error);
