@@ -9,16 +9,8 @@ export default function LoginPage() {
           Enter your information to login your Spotly account.
         </p>
 
-    
+
         <LoginForm />
-
-
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-indigo-400 hover:text-indigo-300 transition-colors font-medium">
-            Register
-          </Link>
-        </p>
       </div>
     </div>
   );
