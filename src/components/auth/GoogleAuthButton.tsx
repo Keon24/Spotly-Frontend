@@ -7,7 +7,7 @@ interface GoogleAuthButtonProps {
 
 const GoogleAuthButton: React.FC<GoogleAuthButtonProps> = ({ text = 'Login with Google' }) => {
   const handleGoogleLogin = () => {
-    window.location.href = '/api/auth/google';
+    window.location.href = 'https://spotly-kozf.onrender.com/auth/redirect/';
   };
 
   return (
