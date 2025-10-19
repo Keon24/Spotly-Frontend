@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage';
 import BookingPage from './pages/BookingPage';
 import ReservationsPage from './pages/ReservationsPage';
 import ProfilePage from './pages/ProfilePage';
+import AuthCallbackPage from './pages/AuthCallbackPage';
 import Layout from './components/layout/Layout';
 import { UserProvider } from './context/UserContext';
 import axios from 'axios';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Register />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/auth/callback" element={<AuthCallbackPage />} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/booking" element={<BookingPage />} />
